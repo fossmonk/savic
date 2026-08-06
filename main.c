@@ -115,6 +115,11 @@ int main() {
         gViz[gCurrViz].fxn(gFFT, FFT_SIZE, 12, (Rectangle){0, 0, gSW, gSH});
         float w = MeasureText(gViz[gCurrViz].name, 20);
         if(IsCursorOnScreen()) DrawText(gViz[gCurrViz].name, (gSW-w)*0.5, 0, 20, GREEN);
+
+        if(CheckCollisionPointRec(GetMousePosition(), (Rectangle){(gSW-w)*0.5, 0, w, 20}) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            gCurrViz = (gCurrViz + 1) % gVizCount;
+        }
+
         EndDrawing();
     }
 

@@ -22,12 +22,14 @@ endif
 
 SRCS := $(wildcard *.c)
 C_OPTS=-Wall -Wextra
-APP=saviz
+APP=savic
 
 all:
-	@echo "Building SAVIZ..."
+	@echo "Building SAVIC..."
 	@cc -o $(APP) $(SRCS) $(INC_PATH) $(LIB_PATH) $(LIBS) $(C_OPTS)
 	@echo "Build Successful."
 
 debug:
 	@cc -o $(APP)_debug $(SRCS) $(INC_PATH) $(LIB_PATH) $(LIBS) $(C_OPTS) -O0 -ggdb
+
+web:

@@ -16,8 +16,9 @@ Run `savic.exe` or `./savic` based on Windows/POSIX.
 
 ## Controls
 
+Visualization name will be printed on top if the mouse is inside the window.
+
 - `h/H` - Show or hide window decorations
 - `f/F` - Fullscreen mode ON/OFF
-- `v/V` - Cycle through visualizations
-
-Visualization name will be printed on top if the mouse is inside the window.
+- `v/V` - Cycle through visualizations. You can also LEFT CLICK the visualization name
+- `q/Q` - Close Widget
