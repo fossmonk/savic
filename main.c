@@ -12,7 +12,9 @@
 #define INIT_H (450)
 #define BG_COLOR (0x111317FF)
 
-float complex gFFT[FFT_SIZE];
+float complex gCFFT[FFT_SIZE];
+float gFFTMag[FFT_SIZE];
+float gTS[FFT_SIZE];
 unsigned int gBitReversalTable[FFT_SIZE];
 
 Viz* gViz;
@@ -92,8 +94,14 @@ int main() {
         gSW = GetScreenWidth();
         gSH = GetScreenHeight();
 
-        Loopback_ReadLatest(loopback, gFFT, FFT_SIZE);
-        fft512(gFFT);
+        Loopback_ReadLatest(loopback, gCFFT, FFT_SIZE);
+        for(int i = 0; i < FFT_SIZE; ++i) {
+            gTS[i] = crealf(gCFFT[i]);
+        }
+        fft512(gCFFT);
+        for(int i = 0; i < FFT_SIZE; ++i) {
+            gFFTMag[i] = cabsf(gCFFT[i]);
+        }
 
         if(IsKeyPressed(KEY_V)) {
             gCurrViz = (gCurrViz + 1) % gVizCount;
@@ -112,7 +120,15 @@ int main() {
         
         BeginDrawing();
         ClearBackground(GetColor(BG_COLOR));
-        gViz[gCurrViz].fxn(gFFT, FFT_SIZE, 12, (Rectangle){0, 0, gSW, gSH});
+        VizParams vParams = {
+            .deltaTime = GetFrameTime(),
+            .winSize = (Rectangle){0, 0, gSW, gSH},
+            .size = FFT_SIZE,
+            .div = 12,
+            .fftMagBins = gFFTMag,
+            .rawSamples = gTS,
+        };
+        gViz[gCurrViz].fxn(vParams);
         float w = MeasureText(gViz[gCurrViz].name, 20);
         if(IsCursorOnScreen()) DrawText(gViz[gCurrViz].name, (gSW-w)*0.5, 0, 20, GREEN);
 

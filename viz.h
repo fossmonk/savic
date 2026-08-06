@@ -3,7 +3,16 @@
 #include <complex.h>
 #include <raylib.h>
 
-typedef void (*VizFxn)(float complex *fftBins, int fftSize, int div, Rectangle winSize);
+typedef struct {
+    Rectangle winSize;
+    float *fftMagBins;
+    float *rawSamples;
+    int size;
+    int div;
+    float deltaTime;
+} VizParams;
+
+typedef void (*VizFxn)(VizParams params);
 
 typedef struct {
     const char* name;
