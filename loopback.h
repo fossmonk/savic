@@ -2,6 +2,7 @@
 #define _LOOPBACK_H_
 
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 typedef struct LoopbackStream LoopbackStream;

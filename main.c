@@ -70,23 +70,22 @@ int main() {
 
     SetTraceLogLevel(LOG_NONE);
     SetConfigFlags(FLAG_MSAA_4X_HINT);
-    InitWindow(INIT_W, INIT_H, "SAVIZ");
+    InitWindow(INIT_W, INIT_H, "SAVIC - System Audio Visualizer In C");
     SetWindowState(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_TOPMOST);
     SetWindowMinSize(300, 300);
     SetTargetFPS(60);
     SetExitKey(KEY_Q);
 
-    initBitReversalTable();
-
     LoopbackStream *loopback = Loopback_Init(48000, 1, 2048);
 
     if(!loopback) {
-        TraceLog(LOG_ERROR, "Failed to init LB Device.\n");
+        printf("ERROR: Failed to init LB Device.\n");
         CloseWindow();
     }
 
     Loopback_Start(loopback);
 
+    initBitReversalTable();
     gViz = Viz_getVTable();
     gVizCount = Viz_getCount();
 

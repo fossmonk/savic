@@ -43,9 +43,9 @@ LoopbackStream* Loopback_Init(uint32_t sampleRate, uint32_t channels, size_t buf
     config.dataCallback     = CBFxn_Loopback;
     config.pUserData        = stream;
 
-#if defined(__APPLE__)
-    // macOS does not support native OS loopback via ma_device_type_loopback.
-    // Fall back to capture mode to pick up virtual devices (BlackHole, Soundflower, Loopback).
+#if !defined(__WIN32)
+    // Linux/macOS does not support native OS loopback via ma_device_type_loopback.
+    // Fall back to capture mode to pick up virtual devices (BlackHole, Soundflower, Pulse Audio Loopback).
     config.deviceType = ma_device_type_capture;
 #endif
 
